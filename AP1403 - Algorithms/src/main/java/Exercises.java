@@ -9,8 +9,17 @@ public class Exercises {
         note: you should return the indices in ascending order and every array's solution is unique
     */
     public int[] productIndices(int[] values, int target) {
-        // todo
-        return null;
+        int[] indices = new int[2];
+        for(int i =0;i<values.length;i++){
+            for(int j =i;j<values.length;j++){
+                if(values[i] * values[j] == target){
+                    indices[0] = i;
+                    indices[1] = j;
+                    return indices;
+                }
+            } 
+        }
+        return indices;
     }
 
     /*
@@ -24,11 +33,29 @@ public class Exercises {
 
         so you should walk in that matrix in a curl and then add the numbers in order you've seen them in a 1D array
     */
-    public int[] spiralTraversal(int[][] values, int rows, int cols) {
-        // todo
-        return null;
-    }
+    public int[] spiralTraversal(int[][] matrix, int rows, int cols) {
 
+        int[] result = new int[rows * cols];
+        boolean[][] visited = new boolean[rows][cols]; 
+        int[] rowDirection = {0, 1, 0, -1};
+        int[] colDirection = {1, 0, -1, 0}; 
+        int row = 0, col = 0, direction = 0; 
+        for (int i = 0; i < rows * cols; i++) {
+            result[i] = matrix[row][col];
+            visited[row][col] = true;
+            int nextRow = row + rowDirection[direction];
+            int nextCol = col + colDirection[direction];
+            if (nextRow >= 0 && nextRow < rows && nextCol >= 0 && nextCol < cols && !visited[nextRow][nextCol]) {
+                row = nextRow;
+                col = nextCol;
+            } else { 
+                direction = (direction + 1) % 4;
+                row += rowDirection[direction];
+                col += colDirection[direction];
+            }
+        }
+        return result;
+    }    
     /*
         integer partitioning is a combinatorics problem in discreet maths
         the problem is to generate sum numbers which their summation is the input number
